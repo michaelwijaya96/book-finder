@@ -34,3 +34,10 @@ export const setListBook = (value) => {
     payload: { value },
   }
 }
+
+export const setIsLoading = (value) => {
+  return {
+    type: ActionTypes.SET_IS_LOADING,
+    payload: { value },
+  }
+}

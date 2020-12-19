@@ -4,6 +4,7 @@ import { ActionTypes } from "./constants"
 const initialState = {
   listBook: {},
   query: "",
+  isLoading: false,
 }
 
 export const homeReducer = (state = initialState, action) => {
@@ -13,6 +14,8 @@ export const homeReducer = (state = initialState, action) => {
       return { ...state, query: payload.value }
     case ActionTypes.SET_LIST_BOOK:
       return { ...state, listBook: payload.value }
+    case ActionTypes.SET_IS_LOADING:
+      return { ...state, isLoading: payload.value }
     default:
       return { ...state }
   }

@@ -1,10 +1,11 @@
 import { ActionTypes } from "./constants"
 import HttpClient from "../../HttpClient"
 import { call, takeLatest, put } from "redux-saga/effects"
-import { setListBook } from "./actions"
+import { setListBook, setIsLoading } from "./actions"
 
 export function* onTypeSearchBarEffect(request) {
   try {
+    yield put(setIsLoading(true))
     const { value } = request.payload
     const listBook = yield call(
       HttpClient.get,
@@ -23,10 +24,12 @@ export function* onTypeSearchBarEffect(request) {
       yield put(setListBook({}))
     }
   } catch (e) {}
+  yield put(setIsLoading(false))
 }
 
 export function* onClickPaginationEffect(request) {
   try {
+    yield put(setIsLoading(true))
     const { query, value } = request.payload
     const listBook = yield call(
       HttpClient.get,
@@ -45,6 +48,7 @@ export function* onClickPaginationEffect(request) {
       yield put(setListBook({}))
     }
   } catch (e) {}
+  yield put(setIsLoading(false))
 }
 
 export default function* homeSaga() {
