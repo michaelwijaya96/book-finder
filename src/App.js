@@ -1,14 +1,16 @@
 import Navbar from "./components/Navbar/index"
 import { BrowserRouter, Route } from "react-router-dom"
-import Home from "./components/Home"
+import Home from "./components/Home/index"
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
+
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Navbar />
-        <Route path="/" component={Home} />
-        <Route path="/" component={Home} />
-        <Route path="/" component={Home} />
+        <MuiThemeProvider>
+          <Navbar />
+          <Route path="/" component={Home} />
+        </MuiThemeProvider>
       </div>
     </BrowserRouter>
   )

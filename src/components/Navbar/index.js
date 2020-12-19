@@ -4,7 +4,6 @@ import { Tab } from "material-ui/Tabs"
 import { setValue } from "./actions"
 import { connect } from "react-redux"
 import { reduxForm } from "redux-form"
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider"
 
 class Navbar extends Component {
   componentDidMount() {
@@ -13,11 +12,9 @@ class Navbar extends Component {
   render() {
     const { value } = this.props
     return (
-      <MuiThemeProvider>
-        <Tabs value={value}>
-          <Tab label={"HOME"}></Tab>
-        </Tabs>
-      </MuiThemeProvider>
+      <Tabs value={value}>
+        <Tab label={"Book Finder"} value={"HOME"}></Tab>
+      </Tabs>
     )
   }
 }
