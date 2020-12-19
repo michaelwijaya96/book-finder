@@ -8,7 +8,6 @@ import {
 } from "./actions"
 import { connect } from "react-redux"
 import { reduxForm } from "redux-form"
-import SearchBar from "./SearchBar/index"
 import Button from "@material-ui/core/Button"
 
 import Card from "@material-ui/core/Card"
