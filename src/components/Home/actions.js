@@ -7,10 +7,10 @@ export const onTypeSearchBar = (value) => {
   }
 }
 
-export const onClickBookLink = (value) => {
+export const onClickBookLink = (history, id, value) => {
   return {
     type: ActionTypes.ON_CLICK_BOOK_LINK,
-    payload: { value },
+    payload: { history, id, value },
   }
 }
 
@@ -31,13 +31,6 @@ export const setSearchQuery = (value) => {
 export const setListBook = (value) => {
   return {
     type: ActionTypes.SET_LIST_BOOK,
-    payload: { value },
-  }
-}
-
-export const setDetailBook = (value) => {
-  return {
-    type: ActionTypes.SET_DETAIL_BOOK,
     payload: { value },
   }
 }

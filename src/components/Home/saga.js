@@ -1,7 +1,7 @@
 import { ActionTypes } from "./constants"
 import HttpClient from "../../HttpClient"
 import { call, takeLatest, put } from "redux-saga/effects"
-import { setListBook, setDetailBook } from "./actions"
+import { setListBook } from "./actions"
 
 export function* onTypeSearchBarEffect(request) {
   try {
@@ -22,16 +22,6 @@ export function* onTypeSearchBarEffect(request) {
     } else {
       yield put(setListBook({}))
     }
-  } catch (e) {}
-}
-
-export function* onClickBookLinkEffect(request) {
-  //Self Link from Response List Book
-  try {
-    const { value } = request.payload
-    const detailBook = yield call(HttpClient.get, value)
-    yield put(setDetailBook(detailBook))
-    //Portal to Detail Page
   } catch (e) {}
 }
 

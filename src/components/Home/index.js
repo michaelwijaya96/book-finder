@@ -38,9 +38,8 @@ class Home extends Component {
     this.props.dispatch(onClickPagination(this.props.query, value))
   }
 
-  onClickBookLink = (value) => {
-    console.log(value)
-    //    this.props.dispatch(onClickBookLink(value))
+  onClickBookLink = (id, value) => {
+    this.props.dispatch(onClickBookLink(this.props.history, id, value))
   }
 
   render() {
@@ -118,15 +117,18 @@ class Home extends Component {
                       )}
                     </CardActions>
                     <div style={{ textAlign: "center", paddingBottom: "12px" }}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
-                          this.onClickBookLink(v.selfLink)
-                        }}
-                      >
-                        Detail
-                      </Button>
+                      {v.volumeInfo !== undefined &&
+                      v.volumeInfo.infoLink !== undefined ? (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          href={v.volumeInfo.infoLink}
+                        >
+                          Info
+                        </Button>
+                      ) : (
+                        <div />
+                      )}
                     </div>
                   </Card>
                   <br />
@@ -151,10 +153,9 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { listBook, detailBook, query } = state.home
+  const { listBook, query } = state.home
   return {
     listBook,
-    detailBook,
     query,
   }
 }
