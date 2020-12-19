@@ -14,6 +14,13 @@ export const onClickBookLink = (value) => {
   }
 }
 
+export const onClickPagination = (query, value) => {
+  return {
+    type: ActionTypes.ON_CLICK_PAGINATION,
+    payload: { query, value },
+  }
+}
+
 export const setSearchQuery = (value) => {
   return {
     type: ActionTypes.SET_SEARCH_QUERY,

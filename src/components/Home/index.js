@@ -1,6 +1,11 @@
 import React, { Component } from "react"
 // import BookCard from "./Card/index"
-import { onTypeSearchBar, onClickBookLink, setSearchQuery } from "./actions"
+import {
+  onTypeSearchBar,
+  onClickBookLink,
+  setSearchQuery,
+  onClickPagination,
+} from "./actions"
 import { connect } from "react-redux"
 import { reduxForm } from "redux-form"
 import SearchBar from "./SearchBar/index"
@@ -12,6 +17,7 @@ import CardActions from "@material-ui/core/CardActions"
 import Typography from "@material-ui/core/Typography"
 import Rating from "@material-ui/lab/Rating"
 import Grid from "@material-ui/core/Grid"
+import Pagination from "@material-ui/lab/Pagination"
 
 class Home extends Component {
   timer = null
@@ -27,6 +33,10 @@ class Home extends Component {
       this.props.dispatch(onTypeSearchBar(this.props.query))
   }
 
+  handlePagination = (e, value) => {
+    this.props.dispatch(onClickPagination(this.props.query, value))
+  }
+
   render() {
     const { listBook } = this.props
 
@@ -37,7 +47,7 @@ class Home extends Component {
           {listBook.data &&
             listBook.data.items.map((v, i) => {
               const image =
-                v.volumeInfo !== undefined ||
+                v.volumeInfo !== undefined &&
                 v.volumeInfo.imageLinks !== undefined
                   ? v.volumeInfo.imageLinks.thumbnail
                   : null
@@ -46,12 +56,16 @@ class Home extends Component {
                   <Card className={"md-12"} style={{ maxWidth: "368px" }}>
                     <CardHeader
                       title={
-                        v.volumeInfo !== undefined ? v.volumeInfo.title : ""
+                        v.volumeInfo !== undefined
+                          ? v.volumeInfo.title
+                          : "There is no title"
                       }
                       subheader={
-                        v.volumeInfo !== undefined
+                        v.volumeInfo !== undefined &&
+                        v.volumeInfo.publishedDate !== undefined &&
+                        v.volumeInfo.publishedDate !== ""
                           ? v.volumeInfo.publishedDate
-                          : ""
+                          : "Date Not Specified"
                       }
                       style={{
                         overflowY: "hidden",
@@ -62,7 +76,7 @@ class Home extends Component {
                     />
                     <div style={{ textAlign: "center" }}>
                       {image == null ? (
-                        <img src="/logo192.png" />
+                        <img src="/logo192.png" style={{ height: "200px" }} />
                       ) : (
                         <img src={image} style={{ height: "200px" }} />
                       )}
@@ -98,9 +112,19 @@ class Home extends Component {
                   <br />
                 </Grid>
               )
-              // return <BookCard key={i} props={v}></BookCard>
             })}
         </Grid>
+        {listBook.data === undefined ||
+        listBook.data.totalItems === undefined ||
+        listBook.data.totalItems === 0 ? (
+          <div />
+        ) : (
+          <Pagination
+            count={Math.ceil(listBook.data.totalItems / 9)}
+            color="primary"
+            onChange={this.handlePagination}
+          />
+        )}
       </div>
     )
   }

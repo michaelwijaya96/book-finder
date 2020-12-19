@@ -29,13 +29,35 @@ export function* onClickBookLinkEffect(request) {
   //Self Link from Response List Book
   try {
     const { value } = request.payload
-    console.log("This is value from on click book link effect:" + value)
     const detailBook = yield call(HttpClient.get, value)
     yield put(setDetailBook(detailBook))
     //Portal to Detail Page
   } catch (e) {}
 }
 
+export function* onClickPaginationEffect(request) {
+  try {
+    const { query, value } = request.payload
+    const listBook = yield call(
+      HttpClient.get,
+      "https://www.googleapis.com/books/v1/volumes",
+      null,
+      {
+        q: query,
+        key: "AIzaSyDivamKcuuwCbb6z5Ps5gjMgGK0a6RFBoU",
+        startIndex: value * 9,
+        maxResults: 9,
+      }
+    )
+    if (listBook.data.items !== 0) {
+      yield put(setListBook(listBook))
+    } else {
+      yield put(setListBook({}))
+    }
+  } catch (e) {}
+}
+
 export default function* homeSaga() {
   yield takeLatest(ActionTypes.ON_TYPE_SEARCH_BAR, onTypeSearchBarEffect)
+  yield takeLatest(ActionTypes.ON_CLICK_PAGINATION, onClickPaginationEffect)
 }
