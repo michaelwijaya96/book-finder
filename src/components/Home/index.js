@@ -49,7 +49,10 @@ class Home extends Component {
 
     return (
       <div className={"components"}>
-        <Input onChange={this.onTypeSearchBar} value={query}></Input>
+        <div style={{ paddingLeft: "12px", paddingTop: "12px" }}>
+          <span>Search : </span>
+          <Input onChange={this.onTypeSearchBar} value={query}></Input>
+        </div>
         {isLoading ? (
           <Loading />
         ) : (
