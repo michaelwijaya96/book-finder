@@ -9,6 +9,7 @@ import {
 import { connect } from "react-redux"
 import { reduxForm } from "redux-form"
 import SearchBar from "./SearchBar/index"
+import Button from "@material-ui/core/Button"
 
 import Card from "@material-ui/core/Card"
 import CardHeader from "@material-ui/core/CardHeader"
@@ -35,6 +36,11 @@ class Home extends Component {
 
   handlePagination = (e, value) => {
     this.props.dispatch(onClickPagination(this.props.query, value))
+  }
+
+  onClickBookLink = (value) => {
+    console.log(value)
+    //    this.props.dispatch(onClickBookLink(value))
   }
 
   render() {
@@ -101,13 +107,27 @@ class Home extends Component {
                           : "No Description"}
                       </Typography>
                     </CardContent>
-                    <CardActions disableSpacing>
+                    <CardActions
+                      disableSpacing
+                      style={{ textAlign: "center", display: "block" }}
+                    >
                       {v.averageRating !== undefined ? (
                         <Rating value={v.averageRating}></Rating>
                       ) : (
                         "No Rating"
                       )}
                     </CardActions>
+                    <div style={{ textAlign: "center", paddingBottom: "12px" }}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          this.onClickBookLink(v.selfLink)
+                        }}
+                      >
+                        Detail
+                      </Button>
+                    </div>
                   </Card>
                   <br />
                 </Grid>
