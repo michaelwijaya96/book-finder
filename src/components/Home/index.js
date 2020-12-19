@@ -123,8 +123,9 @@ class Home extends Component {
                           disableSpacing
                           style={{ textAlign: "center", display: "block" }}
                         >
-                          {v.averageRating !== undefined ? (
-                            <Rating value={v.averageRating}></Rating>
+                          {v.volumeInfo !== undefined &&
+                          v.volumeInfo.averageRating !== undefined ? (
+                            <Rating value={v.volumeInfo.averageRating}></Rating>
                           ) : (
                             "No Rating"
                           )}
