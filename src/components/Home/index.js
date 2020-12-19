@@ -7,14 +7,11 @@ import SearchBar from "./SearchBar/index"
 
 import Card from "@material-ui/core/Card"
 import CardHeader from "@material-ui/core/CardHeader"
-import CardMedia from "@material-ui/core/CardMedia"
 import CardContent from "@material-ui/core/CardContent"
 import CardActions from "@material-ui/core/CardActions"
-import Collapse from "@material-ui/core/Collapse"
-import IconButton from "@material-ui/core/IconButton"
 import Typography from "@material-ui/core/Typography"
-import MoreVertIcon from "@material-ui/icons/MoreVert"
 import Rating from "@material-ui/lab/Rating"
+import Grid from "@material-ui/core/Grid"
 
 class Home extends Component {
   timer = null
@@ -36,54 +33,74 @@ class Home extends Component {
     return (
       <div className={"components"}>
         <SearchBar onChange={this.onTypeSearchBar}></SearchBar>
-        {listBook.data &&
-          listBook.data.items.map((v, i) => {
-            const image =
-              v.volumeInfo !== undefined ||
-              v.volumeInfo.imageLinks !== undefined
-                ? v.volumeInfo.imageLinks.thumbnail
-                : null
-            return (
-              <Card>
-                <CardHeader
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title={v.volumeInfo !== undefined ? v.volumeInfo.title : ""}
-                  subheader={
-                    v.volumeInfo !== undefined ? v.volumeInfo.publishedDate : ""
-                  }
-                />
-                <div>
-                  {image == null ? (
-                    <img src="/logo192.png" />
-                  ) : (
-                    <img src={image} />
-                  )}
-                </div>
+        <Grid container spacing={2}>
+          {listBook.data &&
+            listBook.data.items.map((v, i) => {
+              const image =
+                v.volumeInfo !== undefined ||
+                v.volumeInfo.imageLinks !== undefined
+                  ? v.volumeInfo.imageLinks.thumbnail
+                  : null
+              return (
+                <Grid item xs={4}>
+                  <Card className={"md-12"} style={{ maxWidth: "368px" }}>
+                    <CardHeader
+                      title={
+                        v.volumeInfo !== undefined ? v.volumeInfo.title : ""
+                      }
+                      subheader={
+                        v.volumeInfo !== undefined
+                          ? v.volumeInfo.publishedDate
+                          : ""
+                      }
+                      style={{
+                        overflowY: "hidden",
+                        textOverflow: "ellipsis",
+                        maxWidth: "368px",
+                        whiteSpace: "nowrap",
+                      }}
+                    />
+                    <div style={{ textAlign: "center" }}>
+                      {image == null ? (
+                        <img src="/logo192.png" />
+                      ) : (
+                        <img src={image} style={{ height: "200px" }} />
+                      )}
+                    </div>
 
-                <CardContent>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    {v.volumeInfo !== undefined ? v.volumeInfo.description : ""}
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  {v.averageRating !== undefined ? (
-                    <Rating value={v.averageRating}></Rating>
-                  ) : (
-                    "No Rating"
-                  )}
-                </CardActions>
-              </Card>
-            )
-            // return <BookCard key={i} props={v}></BookCard>
-          })}
+                    <CardContent
+                      style={{
+                        overflowY: "hidden",
+                        textOverflow: "ellipsis",
+                        width: "100%",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        {v.volumeInfo !== undefined &&
+                        v.volumeInfo.description !== undefined
+                          ? v.volumeInfo.description
+                          : "No Description"}
+                      </Typography>
+                    </CardContent>
+                    <CardActions disableSpacing>
+                      {v.averageRating !== undefined ? (
+                        <Rating value={v.averageRating}></Rating>
+                      ) : (
+                        "No Rating"
+                      )}
+                    </CardActions>
+                  </Card>
+                  <br />
+                </Grid>
+              )
+              // return <BookCard key={i} props={v}></BookCard>
+            })}
+        </Grid>
       </div>
     )
   }

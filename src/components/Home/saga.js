@@ -13,6 +13,8 @@ export function* onTypeSearchBarEffect(request) {
       {
         q: value,
         key: "AIzaSyDivamKcuuwCbb6z5Ps5gjMgGK0a6RFBoU",
+        startIndex: 1,
+        maxResults: 9,
       }
     )
     if (listBook.data.items !== 0) {
